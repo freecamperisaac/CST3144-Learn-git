@@ -65,11 +65,11 @@
                     <strong>State:</strong>
                     <select v-model="order.state">
                         <option disabled value="">State</option>
-                        <option>AL</option>
-                        <option>AR</option>
-                        <option>CA</option>
-                        <option>NV</option>
-                    </select>
+                        <option v-for="(state, key) in states"
+                        v-bind:value="state">
+                        {{key}}
+                        </option>
+                        </select>
                 </p>
                 <p>
                     <strong>Zip/Postal Code:</strong> <input v-model="order.zip" />
@@ -108,48 +108,56 @@
                 // the key 'sitename' matches the value of 'v-text' earlier
                 sitename: 'Vue.js Pet Depot',
                 showProduct: true,
+                states:{ 
+                    AL: 'Alabama',
+                    AR: 'Arizona',
+                    CA: 'California',
+                    NV: 'Nevada'
+                },
                 order: {
                     firstName: '',
                     lastName: '',
                     address: '',
                     city: '',
                     zip: '',
-                    state: '',
+                    state:'',
+                    
                     method: 'Home',
-                    gift: false,
-                    sendGift: 'Send as a gift',
-                    dontSendGift: 'Do not send as a gift'
-                },
-
-
-                product: {
-                    id: 1001,
-                    title: "Cat Food, 25lb bag",
-                    description: "A 25 pound bag of <em>irresistible</em>," + "organic goodness for your cat.",
-                    price: 2000,
-                    image: "images/download.jpeg",
-                    availableInventory: 5
-                },
-                cart: [] // array to store items in shopping cart
+                gift: false,
+                sendGift: 'Send as a gift',
+                dontSendGift: 'Do not send as a gift',
+                
             },
+
+
+            product: {
+                id: 1001,
+                title: "Cat Food, 25lb bag",
+                description: "A 25 pound bag of <em>irresistible</em>," + "organic goodness for your cat.",
+                price: 2000,
+                image: "images/download.jpeg",
+                availableInventory: 5
+            },
+            cart: [] // array to store items in shopping cart
+        },
             methods: {
-                addToCart: function () {
-                    this.cart.push(this.product.id);
-                },
-                showCheckout() {
-                    this.showProduct = this.showProduct ? false : true;
-                },
-                submitForm() { alert('Order submitted!') }
+            addToCart: function () {
+                this.cart.push(this.product.id);
             },
+            showCheckout() {
+                this.showProduct = this.showProduct ? false : true;
+            },
+            submitForm() { alert('Order submitted!') }
+        },
             computed: { // the Computed Property object
-                cartItemCount: function () { // the property name
-                    // its value is calculated when it is called
-                    return this.cart.length || "";
-                },
-                canAddToCart: function () {
-                    return this.product.availableInventory > this.cartItemCount;
-                }
+            cartItemCount: function () { // the property name
+                // its value is calculated when it is called
+                return this.cart.length || "";
             },
+            canAddToCart: function () {
+                return this.product.availableInventory > this.cartItemCount;
+            }
+        },
 
         });
     </script>
